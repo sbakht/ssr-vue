@@ -21,3 +21,20 @@ renderer.renderToString(app).then(html => {
 }).catch(err => {
   console.error(err)
 })
+
+const rendererWithTemplate = require('vue-server-renderer').createRenderer({
+  template: require('fs').readFileSync('./index.template.html', 'utf-8')
+})
+
+
+rendererWithTemplate.renderToString(app, (err, html) => {
+  console.log(html) // will be the full page with app content injected.
+})
+
+const rendererWithInlineTemplate = require('vue-server-renderer').createRenderer({
+  template: `inline template here --> <!--vue-ssr-outlet-->`
+})
+
+rendererWithInlineTemplate.renderToString(app, (err, html) => {
+  console.log(html) // will be the full page with app content injected.
+})
